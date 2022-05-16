@@ -39,7 +39,7 @@ const EventList = props => {
         id={index}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className='flex justify-between rounded mb-2 p-2 bg-white  relative xs:p-4 xs:text-xs sm:text-base hover:bg-red-400 md:text-xs lg:text-lg xl:text-xl'
+        className='flex justify-between rounded mb-2 p-2 bg-white  relative xs:p-4 xs:text-xs sm:text-base md:hover:bg-red-400 md:text-xs lg:text-lg xl:text-xl'
       >
         {mouseOver[index] ? (
           <>
