@@ -7,6 +7,7 @@ import EventListUi from './EventListUi';
 const EventList = props => {
   const [mouseOver, setMouseOver] = useState({});
   const [events] = useObtainEvents(props.events);
+  const [style, setStyle] = useState('bg-white');
 
   const handleMouseEnter = e => {
     const { id } = e.target;
@@ -20,12 +21,16 @@ const EventList = props => {
         [id]: true
       });
     }
+
+    props.matches && setStyle('bg-red-400');
   };
 
   const handleMouseLeave = e => {
     setMouseOver({
       [e.target.id]: false
     });
+
+    props.matches && setStyle('bg-white');
   };
 
   //Creates an array of list elements displaying each event. Contains a conditional display if the event is moused over.
@@ -39,14 +44,14 @@ const EventList = props => {
         id={index}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className='flex justify-between rounded mb-2 p-2 bg-white  relative xs:p-4 xs:text-xs sm:text-base md:hover:bg-red-400 md:text-xs lg:text-lg xl:text-xl'
+        className={`flex justify-between rounded mb-2 p-2 ${style} relative xs:p-4 xs:text-xs sm:text-base md:hover:bg-red-400 md:text-xs lg:text-lg xl:text-xl`}
       >
         {mouseOver[index] ? (
           <>
             <span>Do you want to delete this event?</span>
 
             <button
-              className='rounded bg-purple-400 hover:bg-purple-200 px-4 absolute xs:right-10 sm:right-1/2 xl:right-2/3'
+              className='rounded bg-purple-400 hover:bg-purple-200 px-4 absolute xs:right-4'
               onClick={() => {
                 eventRemove(event, events, props.setEvents);
               }}
