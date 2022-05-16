@@ -7,27 +7,41 @@ import EventListUi from './EventListUi';
 const EventList = props => {
   const [mouseOver, setMouseOver] = useState({});
   const [events] = useObtainEvents(props.events);
-  const [style, setStyle] = useState('bg-white');
+  const [style, setStyle] = useState({});
 
   const handleMouseEnter = e => {
     const { id } = e.target;
     if (!id) {
       let parent = e.target.parentElement;
+      if (props.matches) {
+        setStyle({
+          [parent.id]: 'bg-red-400'
+        });
+      }
       setMouseOver({
         [parent.id]: true
       });
     } else {
+      if (props.matches) {
+        setStyle({
+          [id]: 'bg-red-400'
+        });
+      }
       setMouseOver({
         [id]: true
       });
     }
-
-    props.matches && setStyle('bg-red-400');
   };
 
   const handleMouseLeave = e => {
+    const { id } = e.target;
+    if (props.matches) {
+      setStyle({
+        [id]: 'bg-white'
+      });
+    }
     setMouseOver({
-      [e.target.id]: false
+      [id]: false
     });
 
     props.matches && setStyle('bg-white');
@@ -44,7 +58,7 @@ const EventList = props => {
         id={index}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className={`flex justify-between rounded mb-2 p-2 ${style} relative xs:p-4 xs:text-xs sm:text-base md:hover:bg-red-400 md:text-xs lg:text-lg xl:text-xl`}
+        className={`flex justify-between rounded mb-2 p-2 bg-white ${style[index]} relative xs:p-4 xs:text-xs sm:text-base md:hover:bg-red-400 md:text-xs lg:text-lg xl:text-xl`}
       >
         {mouseOver[index] ? (
           <>
