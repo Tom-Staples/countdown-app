@@ -5,7 +5,7 @@ import useObtainEvents from '../../Hooks/useObtainEvents';
 import EventListUi from './EventListUi';
 
 const EventList = props => {
-  const [mouseOver, setMouseOver] = useState({});
+  const [mouseOver, setMouseOver] = useState(false);
   const [events] = useObtainEvents(props.events);
 
   //Creates an array of list elements displaying each event. Contains a conditional display if the event is moused over.
@@ -16,16 +16,39 @@ const EventList = props => {
       <li
         key={index}
         id={index}
-        onMouseEnter={e => {
-          setMouseOver({
-            [e.target.id]: true
-          });
-        }}
-        onMouseLeave={e => {
-          setMouseOver({
-            [e.target.id]: false
-          });
-        }}
+        onMouseEnter={
+          props.matches
+            ? null
+            : e => {
+                setMouseOver({
+                  [e.target.id]: true
+                });
+              }
+        }
+        onMouseLeave={
+          props.matches
+            ? null
+            : e => {
+                setMouseOver({
+                  [e.target.id]: false
+                });
+              }
+        }
+        onClick={
+          props.matches
+            ? e => {
+                if (!mouseOver) {
+                  setMouseOver({
+                    [e.target.id]: true
+                  });
+                } else {
+                  setMouseOver({
+                    [e.target.id]: !mouseOver[e.target.id]
+                  });
+                }
+              }
+            : null
+        }
         className='flex justify-between rounded mb-2 p-2 bg-white hover:bg-red-400 relative xs:p-4 xs:text-xs sm:text-base md:text-xs lg:text-lg xl:text-xl'
       >
         {mouseOver[index] ? (
